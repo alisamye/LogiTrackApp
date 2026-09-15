@@ -1,0 +1,38 @@
+@LogiTrack_HostAddress = http://localhost:5100
+
+### Add an inventory item
+POST {{LogiTrack_HostAddress}}/item/add
+Content-Type: application/json
+
+{
+	"name": "Barcode Scanner",
+	"quantity": 25,
+	"location": "Warehouse B"
+}
+
+### Add an order using the item ID returned above
+POST {{LogiTrack_HostAddress}}/order/add
+Content-Type: application/json
+
+{
+	"customerName": "Acme Logistics",
+	"datePlaced": "2026-09-15T10:00:00Z",
+	"items": [
+		{
+			"itemId": 2,
+			"quantity": 3
+		}
+	]
+}
+
+### Print and return an order summary
+GET {{LogiTrack_HostAddress}}/order/2/summary
+Accept: application/json
+
+### Remove one item from an order
+DELETE {{LogiTrack_HostAddress}}/order/2/item/2
+
+### Remove the complete order
+DELETE {{LogiTrack_HostAddress}}/order/remove/2
+
+###
